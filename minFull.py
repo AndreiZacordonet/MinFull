@@ -2,11 +2,65 @@ from fuelFunction import decode, fuel_calculator_formula
 from geneticAlgorithm import genetic_algorithm
 from roadSegments import SEGMENTS
 
-best, value = genetic_algorithm(100, SEGMENTS[0])
+import matplotlib
+matplotlib.use('TkAgg')
+import matplotlib.pyplot as plt
 
-print(f"Best individual (bits): {best}")
-print(f"Speed: {decode(best, SEGMENTS[0]):.2f} km/h")
-print(f"Fuen consumption (l/100km): {fuel_calculator_formula(best, SEGMENTS[0])}")
-print(f"Fitness: {value:.4f}")
+
+segment_labels = []
+speeds = []
+fuel_consumptions = []
+fitness_values = []
+
+
+for segment in SEGMENTS:
+
+    best, value = genetic_algorithm(100, segment)
+
+    speed = decode(best, segment)
+    fuel = fuel_calculator_formula(best, segment)
+
+    segment_labels.append(f"Segment {segment[:3]}")
+    speeds.append(speed)
+    fuel_consumptions.append(fuel)
+    fitness_values.append(value)
+
+    print(f"\n-----------------SEGMENT{segment}-----------------")
+    print(f"Best individual (bits): {best}")
+    print(f"Speed: {speed:.2f} km/h")
+    print(f"Fuel consumption (l/100km): {fuel}")
+    print(f"Fitness: {value:.4f}")
 
 # TODO: plotting the results
+fig, ax1 = plt.subplots(figsize=(12, 8))
+
+# Bar plot for speeds
+bar_width = 0.4
+x_positions = range(len(segment_labels))
+ax1.bar(x_positions, speeds, color='skyblue', label='Speed (km/h)', width=bar_width, align='center')
+ax1.set_ylabel('Speed (km/h)', fontsize=12)
+ax1.set_xlabel('Road Segments', fontsize=12)
+
+# Rotate x-axis labels for readability
+plt.xticks(x_positions, segment_labels, rotation=45, ha='right', fontsize=10)
+
+# Line plot for fuel consumption
+ax2 = ax1.twinx()
+ax2.plot(x_positions, fuel_consumptions, color='orange', marker='o', label='Fuel (l/100 km)', linewidth=2)
+ax2.set_ylabel('Fuel Consumption (l/100 km)', fontsize=12)
+
+# Annotate fitness values above the bars
+for i, fitness in enumerate(fitness_values):
+    ax1.text(i, speeds[i] + 1, f"{fitness:.2f}", ha='center', va='bottom', fontsize=10, color='black')
+
+# Add legends and title
+ax1.legend(loc='upper left')
+ax2.legend(loc='upper right')
+plt.title('Genetic Algorithm Results for Different Road Segments', fontsize=14)
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+
+# Adjust layout for better spacing
+plt.tight_layout()
+
+# Show the plot
+plt.show()
