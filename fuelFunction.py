@@ -18,18 +18,18 @@ A = 2.2     # m**2 frontal area
 p = 1.225   # air density
 Cd = 0.3    # air friction coefficient
 
-MIN_SPEED, MAX_SPEED, BASE_SPEED, SLOPE_ANGLE, TURN_ANGLE = SEGMENT4
-
-
 a = 1     # fuel influence coefficient
 s = 10     # fuels scaling factor
 b = 1     # speed(time) influence coefficient
 
 
-def fuel_calculator_formula(speed: list) -> float:
-    speed = decode(speed)
-    slope = SLOPE_ANGLE * (1 + speed / BASE_SPEED)
-    turn = math.tan(TURN_ANGLE) * (1 + speed**2 / BASE_SPEED**2)
+def fuel_calculator_formula(speed: list, segment: tuple) -> float:
+
+    _, _, base_speed, slope_angle, turn_angle = segment
+
+    speed = decode(speed, segment)
+    slope = slope_angle * (1 + speed / base_speed)
+    turn = math.tan(turn_angle) * (1 + speed**2 / base_speed**2)
     # road = ROAD_FRICTION_COEFFICIENT * (1 + RESISTIVITY_COEFFICIENT * speed / BASE_SPEED)
     weight = CAR_WEIGHT * speed**2 / 2
     air = p * A * Cd * speed**2 / 2
@@ -37,18 +37,19 @@ def fuel_calculator_formula(speed: list) -> float:
     return C0 + k1 * slope + k2 * turn + k5 * weight + k6 * air
 
 
-def fitness(speed: list) -> float:
-    return a * s * fuel_calculator_formula(speed) - b * decode(speed)
+def fitness(speed: list, segment: tuple) -> float:
+    return a * s * fuel_calculator_formula(speed, segment) - b * decode(speed, segment)
 
 
 BIT_LENGTH = 10
 POPULATION_SIZE = 100
 
 
-def decode(bits: list) -> float:
+def decode(bits: list, segment: tuple) -> float:
+    min_speed, max_speed, _, _, _ = segment
     bit_string = ''.join(map(str, bits))
     value = int(bit_string, 2)
-    return MIN_SPEED + (MAX_SPEED - MIN_SPEED) * (value / (2**BIT_LENGTH - 1))
+    return min_speed + (max_speed - min_speed) * (value / (2 ** BIT_LENGTH - 1))
 
 
 def initialize_population() -> list:
