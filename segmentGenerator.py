@@ -4,27 +4,23 @@ def generate_road_segments(num_segments, file_name):
 
     with open(file_name, 'w') as file:
         for _ in range(num_segments):
-            min_speed = round(random.uniform(10, 20), 2)  # Min speed (10-20 m/s)
-            max_speed = round(random.uniform(21, 40), 2)  # Max speed (21-40 m/s)
+            min_speed = round(random.uniform(30, 50), 2)  # Min speed (30-50 km/h)
+            max_speed = round(random.uniform(50, 130), 2)  # Max speed (50-130 km/h)
             base_speed = round(random.uniform(min_speed, max_speed), 2)  # Base speed between min and max
-            slope_angle = round(random.uniform(-10, 10), 2)  # Slope angle (-10 to 10 degrees)
-            curve_angle = round(random.uniform(0, 90), 2)  # Curve angle (0 to 90 degrees)
-            friction_coefficient = round(random.uniform(0.01, 0.05), 3)  # Road friction coefficient (0.01 to 0.05)
-            resistivity_coefficient = round(random.uniform(0.001, 0.01), 4)  # Resistivity coefficient (0.001 to 0.01)
+            slope_angle = round(random.uniform(-15, 15), 2)  # Slope angle (-15 to 15 degrees)
+            turn_angle = round(random.uniform(0, 180), 2)  # Curve angle (0 to 180 degrees)
 
             segment = [
                 min_speed,
                 max_speed,
                 base_speed,
                 slope_angle,
-                curve_angle,
-                friction_coefficient,
-                resistivity_coefficient
+                turn_angle,
             ]
             file.write(",".join(map(str, segment)) + "\n")
 
 # Example usage
-num_segments = 5  # Change this value to generate more or fewer segments
-file_name = "road_segments.txt"  # File to write the segments
+num_segments = 100
+file_name = "road_segments.txt"
 generate_road_segments(num_segments, file_name)
 print(f"Road segments written to {file_name}")
