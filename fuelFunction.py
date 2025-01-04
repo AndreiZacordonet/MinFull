@@ -59,4 +59,6 @@ def decode(bits: list, segment: tuple) -> float:
 def initialize_population() -> list:
     # Initializes the population by generating random individuals
     np.random.seed(int(time.time()) % 100000)  # Set a seed based on the current time
-    return [np.random.randint(0, 2, BIT_LENGTH).tolist() for _ in range(POPULATION_SIZE)]  # Generate random binary individuals
+    # Generate random binary individuals
+    return [np.random.randint(0, 2, BIT_LENGTH).tolist() for _ in range(POPULATION_SIZE)]
+
