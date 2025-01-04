@@ -12,20 +12,20 @@ speeds = []
 fuel_consumptions = []
 fitness_values = []
 
-
+i = 0
 for segment in SEGMENTS:
-
+    i += 1
     best, value = genetic_algorithm(100, segment)
 
     speed = decode(best, segment)
     fuel = fuel_calculator_formula(best, segment)
 
-    segment_labels.append(f"Segment {segment[:3]}")
+    segment_labels.append(f"Segment {i}")
     speeds.append(speed)
     fuel_consumptions.append(fuel)
     fitness_values.append(value)
 
-    print(f"\n-----------------SEGMENT{segment}-----------------")
+    print(f"\n-----------------SEGMENT {i} {segment}-----------------")
     print(f"Best individual (bits): {best}")
     print(f"Speed: {speed:.2f} km/h")
     print(f"Fuel consumption (l/100km): {fuel}")
