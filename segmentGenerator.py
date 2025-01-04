@@ -1,3 +1,5 @@
+# NOT USED ANYMORE
+
 import random
 
 def generate_road_segments(num_segments, file_name):
