@@ -5,7 +5,7 @@
 In this project, we are tasked with optimizing driving speed and fuel consumption across different road segments. Each road segment has unique characteristics such as:
 
 - Minimum and Maximum Speed: These limits are determined by road signs, regulations, and road conditions (e.g., curves, intersections).
-- Slope Angle: The incline or decline of the road influences fuel consumption and speed, as steep roads may require slower speeds to avoid excessive fuel consumption or vehicle strain.
+- Slope Angle: The incline or decline of the road influences fuel consumption and speed, as steep roads may require slower speeds to avoid excessive fuel consumption.
 - Curve Radius: Sharp curves demand slower speeds to ensure safety, increasing fuel consumption due to the need for frequent speed adjustments.
 
 The objective of the optimization process is to find the optimal driving speed for each segment, which minimizes fuel consumption while respecting the road’s physical constraints. The genetic algorithm is chosen due to its capacity to explore vast solution spaces without requiring an explicit formula for the optimization problem. Additionally, it can effectively balance multiple objectives, such as speed and fuel consumption, which are often conflicting.
