@@ -11,13 +11,12 @@ import matplotlib.pyplot as plt
 segment_labels = []  # Labels for each road segment
 speeds = []  # Best speeds determined by the genetic algorithm
 fuel_consumptions = []  # Fuel consumption corresponding to the best speeds
-fitness_values = []  # Fitness values for the best solutions
 
 i = 0
 for segment in SEGMENTS:
     i += 1
     # Run the genetic algorithm for the current segment
-    best, value = genetic_algorithm(100, segment)
+    best, value = genetic_algorithm(1000, segment)
 
     # Decode the best individual to get the corresponding speed
     speed = decode(best, segment)
@@ -28,7 +27,7 @@ for segment in SEGMENTS:
     segment_labels.append(f"Segment {i}")
     speeds.append(speed)
     fuel_consumptions.append(fuel)
-    fitness_values.append(value)
+    # fitness_values.append(value)
 
     # Print detailed results for the current segment
     print(f"\n-----------------SEGMENT {i} {segment}-----------------")
@@ -56,9 +55,9 @@ ax2 = ax1.twinx()
 ax2.plot(x_positions, fuel_consumptions, color='orange', marker='o', label='Fuel (l/100 km)', linewidth=2)
 ax2.set_ylabel('Fuel Consumption (l/100 km)', fontsize=12)  # Label for the secondary Y-axis
 
-# Annotate fitness values on the bar chart
-for i, fitness in enumerate(fitness_values):
-    ax1.text(i, speeds[i] + 1, f"{fitness:.2f}", ha='center', va='bottom', fontsize=10, color='black')
+# # Annotate fitness values on the bar chart
+# for i, fitness in enumerate(fitness_values):
+#     ax1.text(i, speeds[i] + 1, f"{fitness:.2f}", ha='center', va='bottom', fontsize=10, color='black')
 
 # Add legends for both axes
 ax1.legend(loc='upper left')

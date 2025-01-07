@@ -2,7 +2,6 @@ from random import random, sample, randint
 
 from fuelFunction import BIT_LENGTH, fitness, initialize_population, POPULATION_SIZE
 
-EPSILON = 10**-6  # A small threshold to determine convergence
 
 NUM_GENERATIONS = 1000000  # Maximum number of generations
 CROSSOVER_RATE = 0.9  # Probability of crossover occurring
@@ -33,7 +32,7 @@ def mutate(individual: list) -> list:
 def genetic_algorithm(number_of_generations: int, segment: tuple) -> tuple:
     # Main function implementing the genetic algorithm
     population = initialize_population()  # Initialize population
-    print(population)  # Display the initial population
+    # print(population)  # Display the initial population
     best_individual = min(population, key=lambda x: fitness(x, segment))  # Select the best individual based on fitness
 
     for generation in range(number_of_generations):
@@ -47,8 +46,5 @@ def genetic_algorithm(number_of_generations: int, segment: tuple) -> tuple:
 
         population = new_population[:POPULATION_SIZE]  # Set new population
         best_individual = min(population, key=lambda x: fitness(x, segment))  # Update the best individual
-
-        if fitness(best_individual, segment) < EPSILON:  # Stop if solution is sufficiently good
-            break
 
     return best_individual, fitness(best_individual, segment)  # Return the best solution and its fitness
